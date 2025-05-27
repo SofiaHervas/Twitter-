@@ -19,7 +19,9 @@ class LSTMModel(nn.Module):
 
 def load_model(vocab_size, output_dim, pad_idx):
     model = LSTMModel(vocab_size, 100, 128, output_dim, pad_idx)
-    model_path = Path(__file__).parent.parent / 'model' / 'emotion_model.pt'
-    model.load_state_dict(torch.load(model_path, map_location='cpu'))
+    path = Path(__file__).parent.parent / 'model' / 'emotion_model.pt'
+    model.load_state_dict(torch.load(path, map_location='cpu'))
     model.eval()
     return model
+
+
