@@ -5,9 +5,9 @@ setup(
     version='0.1',
     packages=find_packages(),
     include_package_data=True,
-package_data={
-    'inference': ['data/*.pt', 'data/*.pkl'],
-},
+    package_data={
+        'inference': ['data/*.pt', 'data/*.pkl'],
+    },
     install_requires=[
         'torch',
         'pandas',
@@ -20,3 +20,4 @@ package_data={
         ]
     },
 )
+
