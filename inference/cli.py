@@ -1,7 +1,7 @@
 import argparse
 import torch
 from .model import load_model
-from .utils import encode_text, load_vocab, load_label_encoder
+from .utils import encode_text, load_vocab
 
 def main():
     parser = argparse.ArgumentParser(description="Emotion Classifier CLI")
@@ -10,17 +10,16 @@ def main():
     args = parser.parse_args()
 
     if args.kaggle:
-        print("SofiaHervas")  
+        print("SofiaHervas")  # Cambia esto por tu username real de Kaggle si es otro
         return
 
     if args.input:
         vocab = load_vocab()
-        label_encoder = load_label_encoder()
 
-        # ⚠️ El modelo fue entrenado con 6 clases
+        # Modelo entrenado con 6 emociones
         model = load_model(
             vocab_size=len(vocab),
-            output_dim=6,  
+            output_dim=6,  # ← Fuerza 6 clases (importante)
             pad_idx=vocab['<PAD>']
         )
 
@@ -28,5 +27,8 @@ def main():
         with torch.no_grad():
             output = model(encoded)
             pred = torch.argmax(output, dim=1).item()
-            emotion = label_encoder.inverse_transform([pred])[0]
-            print(emotion)
+
+        # Mapeo manual a etiquetas
+        class_labels = ['anger', 'fear', 'joy', 'love', 'sadness', 'surprise']
+        emotion = class_labels[pred]
+        print(emotion)
