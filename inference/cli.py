@@ -10,14 +10,19 @@ def main():
     args = parser.parse_args()
 
     if args.kaggle:
-        print("sofahervs")
+        print("SofiaHervas")  
         return
 
     if args.input:
-        print("Input received:", args.input) 
         vocab = load_vocab()
         label_encoder = load_label_encoder()
-        model = load_model(vocab_size=len(vocab), output_dim=len(label_encoder.classes_), pad_idx=vocab['<PAD>'])
+
+        # ⚠️ El modelo fue entrenado con 6 clases
+        model = load_model(
+            vocab_size=len(vocab),
+            output_dim=6,  
+            pad_idx=vocab['<PAD>']
+        )
 
         encoded = encode_text([args.input], vocab)
         with torch.no_grad():
