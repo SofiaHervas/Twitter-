@@ -5,6 +5,9 @@ setup(
     version='0.1',
     packages=find_packages(),
     include_package_data=True,
+    package_data={
+        '': ['model/*.pt', 'model/*.pkl'],
+    },
     install_requires=[
         'torch',
         'pandas',
