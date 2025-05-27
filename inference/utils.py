@@ -1,16 +1,13 @@
 import pickle
 import torch
-from pathlib import Path
-import os
+import importlib.resources
 
 def load_vocab():
-    path = Path(__file__).parent.parent / 'model' / 'vocab.pkl'
-    with open(path, 'rb') as f:
+    with importlib.resources.open_binary('inference.data', 'vocab.pkl') as f:
         return pickle.load(f)
 
 def load_label_encoder():
-    path = Path(__file__).parent.parent / 'model' / 'label_encoder.pkl'
-    with open(path, 'rb') as f:
+    with importlib.resources.open_binary('inference.data', 'label_encoder.pkl') as f:
         return pickle.load(f)
 
 def encode_text(texts, vocab, max_length=100):
