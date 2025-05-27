@@ -1,6 +1,6 @@
 import torch
 import torch.nn as nn
-from pathlib import Path
+import importlib.resources
 
 class LSTMModel(nn.Module):
     def __init__(self, vocab_size, embed_dim, hidden_dim, output_dim, pad_idx):
@@ -19,9 +19,10 @@ class LSTMModel(nn.Module):
 
 def load_model(vocab_size, output_dim, pad_idx):
     model = LSTMModel(vocab_size, 100, 128, output_dim, pad_idx)
-    path = Path(__file__).parent.parent / 'model' / 'emotion_model.pt'
-    model.load_state_dict(torch.load(path, map_location='cpu'))
+    with importlib.resources.path('inference.data', 'emotion_model.pt') as model_path:
+        model.load_state_dict(torch.load(model_path, map_location='cpu'))
     model.eval()
     return model
+
 
 
